@@ -1,0 +1,28 @@
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+
+# Load the iris dataset
+data = load_iris()
+X = pd.DataFrame(data.data, columns=data.feature_names)
+y = pd.Series(data.target)
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# K-Nearest Neighbors (K-NN)
+knn = KNeighborsClassifier(n_neighbors=3)  # You can adjust the number of neighbors (k)
+knn.fit(X_train, y_train)
+y_pred_knn = knn.predict(X_test)
+accuracy_knn = accuracy_score(y_test, y_pred_knn)
+print("Accuracy (K-NN):", accuracy_knn)
+
+# Naive Bayes
+nb = GaussianNB()
+nb.fit(X_train, y_train)
+y_pred_nb = nb.predict(X_test)
+accuracy_nb = accuracy_score(y_test, y_pred_nb)
+print("Accuracy (Naive Bayes):", accuracy_nb)
